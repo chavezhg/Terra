@@ -22,6 +22,7 @@ import com.dfsek.terra.api.world.chunk.generation.ProtoWorld;
 import com.dfsek.terra.bukkit.BukkitEntity;
 import com.dfsek.terra.bukkit.generator.BukkitChunkGeneratorWrapper;
 import com.dfsek.terra.bukkit.util.BukkitUtils;
+import com.dfsek.terra.bukkit.world.block.data.BlockEntityData;
 import com.dfsek.terra.bukkit.world.block.data.BukkitBlockState;
 import com.dfsek.terra.bukkit.world.block.state.BukkitBlockEntity;
 import com.dfsek.terra.bukkit.world.entity.BukkitEntityType;
@@ -51,6 +52,12 @@ public class BukkitProtoWorld implements ProtoWorld {
         access(x, y, z, () -> {
             BlockData bukkitData = BukkitAdapter.adapt(data);
             delegate.setBlockData(x, y, z, bukkitData);
+
+            BlockEntityData blockEntityData = ((BukkitBlockState) data).getBlockEntityData();
+            if(blockEntityData != null) {
+                blockEntityData.applyTo(delegate.getBlockState(x, y, z));
+            }
+
             if(physics) {
                 if(BukkitUtils.isLiquid(bukkitData)) {
                     delegate.scheduleFluidUpdate(x, y, z);

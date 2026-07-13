@@ -30,6 +30,8 @@ import com.dfsek.terra.api.world.chunk.Chunk;
 import com.dfsek.terra.api.world.chunk.generation.ChunkGenerator;
 import com.dfsek.terra.bukkit.BukkitEntity;
 import com.dfsek.terra.bukkit.generator.BukkitChunkGeneratorWrapper;
+import com.dfsek.terra.bukkit.world.block.data.BlockEntityData;
+import com.dfsek.terra.bukkit.world.block.data.BukkitBlockState;
 import com.dfsek.terra.bukkit.world.block.state.BukkitBlockEntity;
 import com.dfsek.terra.bukkit.world.entity.BukkitEntityType;
 
@@ -50,6 +52,11 @@ public class BukkitServerWorld implements ServerWorld {
     @Override
     public void setBlockState(int x, int y, int z, BlockState data, boolean physics) {
         delegate.getBlockAt(x, y, z).setBlockData(BukkitAdapter.adapt(data), physics);
+
+        BlockEntityData blockEntityData = ((BukkitBlockState) data).getBlockEntityData();
+        if(blockEntityData != null) {
+            blockEntityData.applyTo(delegate.getBlockAt(x, y, z).getState());
+        }
     }
 
     @Override

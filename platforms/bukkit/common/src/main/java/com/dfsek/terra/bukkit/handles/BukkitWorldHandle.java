@@ -27,6 +27,7 @@ import com.dfsek.terra.api.block.state.BlockState;
 import com.dfsek.terra.api.entity.EntityType;
 import com.dfsek.terra.api.handle.WorldHandle;
 import com.dfsek.terra.bukkit.util.BukkitUtils;
+import com.dfsek.terra.bukkit.world.block.data.BlockEntityData;
 import com.dfsek.terra.bukkit.world.block.data.BukkitBlockState;
 
 
@@ -40,9 +41,14 @@ public class BukkitWorldHandle implements WorldHandle {
 
     @Override
     public synchronized @NotNull BlockState createBlockState(@NotNull String data) {
+        int nbtStart = data.indexOf('{');
+
+        String blockData = nbtStart < 0 ? data : data.substring(0, nbtStart);
+        BlockEntityData blockEntityData = nbtStart < 0 ? null : BlockEntityData.parse(data.substring(nbtStart));
+
         org.bukkit.block.data.BlockData bukkitData = Bukkit.createBlockData(
-            data); // somehow bukkit managed to make this not thread safe! :)
-        return BukkitBlockState.newInstance(bukkitData);
+            blockData);
+        return BukkitBlockState.newInstance(bukkitData, blockEntityData);
     }
 
     @Override

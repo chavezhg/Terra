@@ -26,12 +26,27 @@ import com.dfsek.terra.bukkit.world.BukkitAdapter;
 public class BukkitBlockState implements BlockState {
     private final org.bukkit.block.data.BlockData delegate;
 
+    private final BlockEntityData blockEntityData;
+
     protected BukkitBlockState(org.bukkit.block.data.BlockData delegate) {
+        this(delegate, null);
+    }
+
+    protected BukkitBlockState(org.bukkit.block.data.BlockData delegate, BlockEntityData blockEntityData) {
         this.delegate = delegate;
+        this.blockEntityData = blockEntityData;
     }
 
     public static BlockState newInstance(org.bukkit.block.data.BlockData bukkitData) {
         return new BukkitBlockState(bukkitData);
+    }
+
+    public static BlockState newInstance(org.bukkit.block.data.BlockData bukkitData, BlockEntityData blockEntityData) {
+        return new BukkitBlockState(bukkitData, blockEntityData);
+    }
+
+    public BlockEntityData getBlockEntityData() {
+        return blockEntityData;
     }
 
 
