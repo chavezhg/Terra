@@ -23,12 +23,23 @@ import com.dfsek.terra.api.entity.EntityType;
 public class BukkitEntityType implements EntityType {
     private final org.bukkit.entity.EntityType delegate;
 
+    private final EntityData entityData;
+
     public BukkitEntityType(org.bukkit.entity.EntityType delegate) {
+        this(delegate, null);
+    }
+
+    public BukkitEntityType(org.bukkit.entity.EntityType delegate, EntityData entityData) {
         this.delegate = delegate;
+        this.entityData = entityData;
     }
 
     @Override
     public org.bukkit.entity.EntityType getHandle() {
         return delegate;
+    }
+
+    public EntityData getEntityData() {
+        return entityData;
     }
 }

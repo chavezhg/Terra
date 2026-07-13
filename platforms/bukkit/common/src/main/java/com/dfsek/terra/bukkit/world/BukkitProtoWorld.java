@@ -26,6 +26,7 @@ import com.dfsek.terra.bukkit.world.block.data.BlockEntityData;
 import com.dfsek.terra.bukkit.world.block.data.BukkitBlockState;
 import com.dfsek.terra.bukkit.world.block.state.BukkitBlockEntity;
 import com.dfsek.terra.bukkit.world.entity.BukkitEntityType;
+import com.dfsek.terra.bukkit.world.entity.EntityData;
 
 
 public class BukkitProtoWorld implements ProtoWorld {
@@ -95,9 +96,17 @@ public class BukkitProtoWorld implements ProtoWorld {
 
     @Override
     public Entity spawnEntity(double x, double y, double z, EntityType entityType) {
-        return access((int) x, (int) y, (int) z, () -> new BukkitEntity(
-            delegate.spawnEntity(new Location(delegate.getWorld(), x, y, z), ((BukkitEntityType) entityType).getHandle()))).orElse(
-            null);
+        return access((int) x, (int) y, (int) z, () -> {
+            org.bukkit.entity.Entity spawned = delegate.spawnEntity(new Location(delegate.getWorld(), x, y, z),
+                ((BukkitEntityType) entityType).getHandle());
+
+            EntityData entityData = ((BukkitEntityType) entityType).getEntityData();
+            if(entityData != null) {
+                entityData.applyTo(spawned);
+            }
+
+            return new BukkitEntity(spawned);
+        }).orElse(null);
     }
 
     @Override
