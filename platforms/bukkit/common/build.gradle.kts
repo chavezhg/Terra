@@ -2,6 +2,11 @@ repositories {
 
 }
 
+// Minecraft 26.2 requires Java 25; override the project-wide release=21 baseline.
+tasks.withType<JavaCompile>().configureEach {
+    options.release = 25
+}
+
 dependencies {
     shadedApi(project(":common:implementation:base"))
 

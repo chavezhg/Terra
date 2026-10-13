@@ -12,6 +12,11 @@ dependencies {
     shaded("xyz.jpenilla", "reflection-remapper", Versions.Bukkit.reflectionRemapper)
 }
 
+// Minecraft 26.2 requires Java 25; override the project-wide release=21 baseline.
+tasks.withType<JavaCompile>().configureEach {
+    options.release = 25
+}
+
 tasks {
     shadowJar {
         relocate("io.papermc.lib", "com.dfsek.terra.lib.paperlib")

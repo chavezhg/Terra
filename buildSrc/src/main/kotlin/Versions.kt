@@ -60,16 +60,16 @@ object Versions {
 //    }
     
     object Bukkit {
-        const val minecraft = "1.21.11-rc3"
+        const val minecraft = "26.2"
         const val nms = "$minecraft-R0.1"
-        const val paperBuild = "$nms-20251208.200020-2"
+        const val paperBuild = "26.2.build.111-stable"
         const val paper = paperBuild
         const val paperLib = "1.0.8"
         const val reflectionRemapper = "0.1.3"
         const val paperDevBundle = paperBuild
-        const val runPaper = "2.3.1"
-        const val paperWeight = "2.0.0-beta.19"
-        const val cloud = "2.0.0-beta.12"
+        const val runPaper = "3.0.2"
+        const val paperWeight = "2.0.0-beta.21"
+        const val cloud = "2.0.0-beta.17"
         const val multiverse = "5.3.0"
     }
     
@@ -86,16 +86,16 @@ object Versions {
     }
     
     object Allay {
-        const val api = "0.20.0"
+        const val api = "0.28.0"
         const val gson = "2.13.2"
-        
-        const val mappings = "366baa6"
-        const val mappingsGenerator = "e957088"
-        
-        const val mcmeta = "c976eb3"
+
+        const val mappings = "0c2ac22"
+        const val mappingsGenerator = "3742321"
+
+        const val mcmeta = "805b8ac"
     }
     
     object Minestom {
-        const val minestom = "2025.12.20c-1.21.11"
+        const val minestom = "2026.08.07-26.2"
     }
 }
